@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>每日时政 · 公考备考</title><script src="https://cdn.tailwindcss.com"></script><script>tailwind.config={theme:{extend:{colors:{primary:'#1677ff',pLight:'#e6f4ff'}}}}</script>
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f5f7}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+.tab-active{background:#1677ff!important;color:#fff!important;border-color:#1677ff!important}
+.card-hover:hover{background:#fafafa}
+.fade-in{animation:fadeIn .3s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+</style></head><body class="min-h-screen">
+
+<!-- ====== 列表页 ====== -->
+<div id="listPage">
+  <div class="max-w-5xl mx-auto px-6 py-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-5">
+      <div><h1 class="text-xl font-extrabold tracking-tight">📰 每日时政</h1><p class="text-xs text-gray-400 mt-1">公考时政热点 · 考点式解读</p></div>
+      <div class="flex items-center gap-2">
+        <button id="viewList" class="p-2 rounded-lg bg-primary text-white"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></button>
+        <button id="viewGrid" class="p-2 rounded-lg bg-white border border-gray-200 text-gray-400"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></button>
+      </div>
+    </div>
+
+    <!-- Time tabs -->
+    <div class="flex gap-2 mb-4 flex-wrap" id="timeTabs">
+      <button class="px-4 py-1.5 rounded-full text-sm font-semibold border transition" data-time="today" onclick="filterTime('today',this)">今天</button>
+      <button class="px-4 py-1.5 rounded-full text-sm font-semibold border transition" data-time="3day" onclick="filterTime('3day',this)">近三天</button>
+      <button class="px-4 py-1.5 rounded-full text-sm font-semibold border transition tab-active" data-time="7day" onclick="filterTime('7day',this)">近七天</button>
+      <button class="px-4 py-1.5 rounded-full text-sm font-semibold border transition" data-time="30day" onclick="filterTime('30day',this)">近一个月</button>
+    </div>
+
+    <!-- Category tabs -->
+    <div class="flex gap-2 mb-2 flex-wrap" id="catTabs1">
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition tab-active" data-cat="all" onclick="filterCat('all',this)">全部</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="重要会议文件" onclick="filterCat('重要会议文件',this)">重要会议文件</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="科技创新" onclick="filterCat('科技创新',this)">科技创新</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="经济发展" onclick="filterCat('经济发展',this)">经济发展</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="社会治理" onclick="filterCat('社会治理',this)">社会治理</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="乡村振兴" onclick="filterCat('乡村振兴',this)">乡村振兴</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="民生保障" onclick="filterCat('民生保障',this)">民生保障</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="生态环保" onclick="filterCat('生态环保',this)">生态环保</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="法治建设" onclick="filterCat('法治建设',this)">法治建设</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="文化建设" onclick="filterCat('文化建设',this)">文化建设</button>
+    </div>
+    <div class="flex gap-2 mb-5 flex-wrap" id="catTabs2">
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="国家安全" onclick="filterCat('国家安全',this)">国家安全</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="外交国际" onclick="filterCat('外交国际',this)">外交国际</button>
+      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="党建理论" onclick="filterCat('党建理论',this)">党建理论</button>
+    </div>
+
+    <!-- Count -->
+    <p class="text-xs text-gray-400 mb-3" id="listCount">共 14 条时政</p>
+
+    <!-- List -->
+    <div id="newsList" class="space-y-0 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"></div>
+  </div>
+</div>
+
+<!-- ====== 详情页 ====== -->
+<div id="detailPage" class="hidden">
+  <div class="max-w-5xl mx-auto px-6 py-6">
+    <!-- Nav -->
+    <div class="flex items-center gap-4 mb-6">
+      <button onclick="backToList()" class="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-primary transition"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>返回</button>
+      <div class="flex-1"><h1 class="text-lg font-extrabold" id="detailTitle"></h1></div>
+      <div class="flex items-center gap-3 text-xs text-gray-400"><span id="detailSource"></span><span class="text-yellow-500 cursor-pointer text-lg" id="detailStar" onclick="toggleStar()">☆</span><span class="bg-gray-100 px-2 py-1 rounded text-xs" id="detailCat"></span></div>
+    </div>
+
+    <!-- 考点式摘要 -->
+    <div class="bg-pLight rounded-xl p-5 mb-5 fade-in">
+      <h3 class="text-sm font-bold text-primary mb-3">📋 考点式摘要</h3>
+      <p class="text-sm leading-relaxed text-gray-700" id="detailSummary"></p>
+      <p class="text-xs text-gray-400 mt-3" id="detailSourceLink"></p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-2 mb-4" id="detailTabs">
+      <button class="px-4 py-2 rounded-lg text-sm font-bold transition tab-active" data-dtab="exam" onclick="switchDetailTab('exam',this)">必备考点表</button>
+      <button class="px-4 py-2 rounded-lg text-sm font-bold transition bg-white border border-gray-200 text-gray-500" data-dtab="shenlun" onclick="switchDetailTab('shenlun',this)">申论素材卡</button>
+      <button class="px-4 py-2 rounded-lg text-sm font-bold transition bg-white border border-gray-200 text-gray-500" data-dtab="words" onclick="switchDetailTab('words',this)">高频实词</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div id="tabExam" class="fade-in">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <table class="w-full text-sm">
+          <thead><tr class="bg-gray-50"><th class="px-4 py-3 text-left font-bold text-xs text-gray-500 w-1/5">必备考点</th><th class="px-4 py-3 text-left font-bold text-xs text-gray-500 w-1/4">会怎么考</th><th class="px-4 py-3 text-left font-bold text-xs text-gray-500 w-1/4">容易错在哪</th><th class="px-4 py-3 text-left font-bold text-xs text-gray-500">速记</th></tr></thead>
+          <tbody id="tabExamBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div id="tabShenlun" class="hidden fade-in">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5"><p class="text-sm leading-relaxed text-gray-700" id="tabShenlunContent"></p></div>
+    </div>
+    <div id="tabWords" class="hidden fade-in">
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5"><div class="flex flex-wrap gap-2" id="tabWordsContent"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Drawer -->
+<div class="fixed inset-0 bg-black/10 z-[250] hidden" id="drawerOverlay" onclick="toggleDrawer()"></div>
+<div class="fixed left-[-200px] top-0 bottom-0 w-[180px] z-[260] bg-[#f5f5f7] border-r border-gray-100 flex flex-col gap-2.5 px-4 py-20 transition-all duration-300 shadow-lg" id="drawerPanel">
+  <div class="absolute -right-[44px] top-1/2 -translate-y-1/2 bg-white rounded-r-xl py-3 px-2 cursor-pointer shadow-md border border-l-0 flex flex-col gap-1 z-[261]" onclick="toggleDrawer()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
+  <a href="https://thanhtientt51-commits.github.io/jiangsu-jobs-2026/" class="block py-3 px-3.5 rounded-xl bg-white border text-sm font-bold text-center no-underline transition hover:-translate-y-0.5 hover:border-primary">筛岗</a>
+  <a href="https://thanhtientt51-commits.github.io/mock-interview/" class="block py-3 px-3.5 rounded-xl bg-white border text-sm font-bold text-center no-underline transition hover:-translate-y-0.5 hover:border-primary">面试</a>
+  <a href="https://thanhtientt51-commits.github.io/xct/" class="block py-3 px-3.5 rounded-xl bg-white border text-sm font-bold text-center no-underline transition hover:-translate-y-0.5 hover:border-primary">行测</a>
+  <a href="https://thanhtientt51-commits.github.io/sl-practice/" class="block py-3 px-3.5 rounded-xl bg-white border text-sm font-bold text-center no-underline transition hover:-translate-y-0.5 hover:border-primary">申论</a>
+  <a href="https://thanhtientt51-commits.github.io/shenlunguifanciyu/" class="block py-3 px-3.5 rounded-xl bg-white border text-sm font-bold text-center no-underline transition hover:-translate-y-0.5 hover:border-primary">规范词</a>
+  <a href="https://thanhtientt51-commits.github.io/idiom-practice/" class="block py-3 px-3.5 rounded-xl bg-white border text-sm font-bold text-center no-underline transition hover:-translate-y-0.5 hover:border-primary">成语</a>
+</div>
+
+<script>
+var drawerOpen=false;function toggleDrawer(){drawerOpen=!drawerOpen;document.getElementById('drawerPanel').style.left=drawerOpen?'0':'-200px';document.getElementById('drawerOverlay').style.display=drawerOpen?'block':'none'}
+
+// ====== DATA ======
+var newsData=[
+  {id:1,title:"中央经济工作会议在北京举行 习近平发表重要讲话",cat:"经济发展",time:"2026-06-20",source:"新华社",star:!1,
+    summary:"中央经济工作会议12月15日至16日在北京举行。习近平总书记出席会议并发表重要讲话，总结2026年经济工作，分析当前经济形势，部署2027年经济工作。会议强调要坚持稳中求进工作总基调，完整准确全面贯彻新发展理念，加快构建新发展格局，着力推动高质量发展。",
+    sourceLink:"来源：新华社 2026-06-20",
+    exam:[
+      {point:"中央经济工作会议的核心精神",test:"常识判断：2026年中央经济工作会议强调的主基调是？",trap:"易与'中央农村工作会议''全国两会'等会议内容混淆，需准确记忆不同会议的主题。",mem:"稳中求进·新发展理念·高质量发展"},
+      {point:"2027年经济工作的重点任务",test:"言语理解/逻辑填空：会议部署的重点任务可作为题干背景出现。",trap:"多项任务并列出现时容易漏选，建议按'科技-内需-改革-开放-风险'逻辑链记忆。",mem:"科技自立自强·扩大内需·深化改革开放·防范化解风险"},
+      {point:"当前经济形势的基本判断",test:"片段阅读：题干可能引用会议对经济形势的判断作为材料。",trap:"注意区分'回升向好'（积极）与'依然严峻'（问题）的辩证表述，两者同时存在。",mem:"回升向好·基础不牢·外部不确定"},
+    ],
+    shenlun:"可用于'经济发展''政策落实'类申论话题。引用：'正如中央经济工作会议所指出的，要坚持稳中求进工作总基调，在高质量发展中促进共同富裕。'论证角度：从'科技自立自强'切入，论述创新驱动对经济高质量发展的关键作用。",
+    words:[{w:"稳中求进",d:"在保持稳定的基础上追求进步"},{w:"新发展格局",d:"以国内大循环为主体、国内国际双循环相互促进"},{w:"高质量发展",d:"能够满足人民日益增长的美好生活需要的发展"}]},
+  {id:2,title:"习近平对防汛抗旱工作作出重要指示",cat:"社会治理",time:"2026-06-19",source:"新华社",star:!1,
+    summary:"习近平总书记对当前防汛抗旱工作作出重要指示，要求各地区和有关部门坚持人民至上、生命至上，强化风险意识，树牢底线思维，压实防汛抗旱各项责任，全力保障人民群众生命财产安全和社会大局稳定。",
+    sourceLink:"来源：新华社 2026-06-19",
+    exam:[
+      {point:"防汛抗旱工作的基本原则",test:"常识判断：习近平总书记强调防汛抗旱要坚持什么？",trap:"易与'预防为主、防抗救相结合'混淆，此处强调'人民至上、生命至上'。",mem:"人民至上·生命至上·底线思维"},
+      {point:"应急管理体系建设",test:"申论对策题：如何完善应急管理体系？",trap:"只写'加强预警'不够全面，需涵盖预警、响应、救援、重建全链条。",mem:"监测预警·应急响应·抢险救援·灾后重建"},
+    ],
+    shenlun:"适用于'公共安全''应急管理'等话题。引用：'习近平总书记强调防汛抗旱要坚持人民至上、生命至上，这启示我们在应急管理体系建设中，必须始终把人民群众的生命安全放在首位。'",
+    words:[{w:"人民至上",d:"将人民利益置于最高位置"},{w:"底线思维",d:"从最坏处着眼做最充分准备"},{w:"风险意识",d:"对潜在风险保持警觉和预防"}]},
+  {id:3,title:"国务院常务会议审议通过《促进人工智能产业高质量发展若干措施》",cat:"科技创新",time:"2026-06-18",source:"中国政府网",star:!1,
+    summary:"国务院总理李强6月18日主持召开国务院常务会议，审议通过《促进人工智能产业高质量发展若干措施》。会议指出，人工智能是引领未来的战略性技术，要抢抓机遇、乘势而上，加快推动人工智能产业高质量发展，培育新质生产力。",
+    sourceLink:"来源：中国政府网 2026-06-18",
+    exam:[
+      {point:"人工智能产业政策方向",test:"常识判断：国务院通过的促进AI产业措施体现了什么导向？",trap:"注意区分'发展'与'安全'的平衡，措施中两者并重。",mem:"新质生产力·战略性技术·发展与安全并重"},
+      {point:"新质生产力的内涵",test:"言语理解：题干可能出现'新质生产力'作为关键词。",trap:"新质生产力≠传统生产力升级版，核心是技术革命性突破。",mem:"技术突破·要素创新·产业升级"},
+    ],
+    shenlun:"适用于'科技创新''产业升级'话题。引用：'国务院常务会议审议通过促进人工智能产业发展若干措施，释放了以科技创新引领产业创新的强烈信号。'",
+    words:[{w:"新质生产力",d:"以技术创新为驱动的高质量先进生产力"},{w:"乘势而上",d:"抓住有利时机加快发展"},{w:"战略性技术",d:"对国家发展全局具有重大影响的技术"}]},
+  {id:4,title:"全国政协召开'加快推进数字政府建设'专题协商会",cat:"法治建设",time:"2026-06-17",source:"人民政协报",star:!1,
+    summary:"全国政协6月17日在京召开'加快推进数字政府建设'专题协商会。会议强调，数字政府建设是推进国家治理体系和治理能力现代化的重要举措，要坚持以人民为中心，以数字化转型驱动政府治理方式变革。",
+    sourceLink:"来源：人民政协报 2026-06-17",
+    exam:[
+      {point:"数字政府建设的核心目标",test:"常识判断：数字政府建设的出发点和落脚点是什么？",trap:"容易只关注'技术层面'而忽略'以人民为中心'的价值导向。",mem:"以人民为中心·治理现代化·数据驱动"},
+    ],
+    shenlun:"适用于'数字政府''政务服务'话题。引用：'数字政府建设是推进国家治理能力现代化的关键一环，正如专题协商会所强调的，要以数字化转型驱动政府治理方式变革。'",
+    words:[{w:"数字政府",d:"运用数字技术提升政府治理效能"},{w:"治理现代化",d:"使国家治理体系适应现代社会需求"}]},
+  {id:5,title:"全国夏粮再获丰收 总产量达14689万吨",cat:"乡村振兴",time:"2026-06-16",source:"农业农村部",star:!1,
+    summary:"国家统计局6月16日发布数据，2026年全国夏粮总产量14689万吨，比上年增加146万吨，增长1.0%。夏粮播种面积稳中有增，单产水平持续提升，为全年粮食稳产增产奠定了坚实基础。",
+    sourceLink:"来源：农业农村部 2026-06-16",
+    exam:[
+      {point:"粮食安全的重要性",test:"常识判断：我国粮食安全战略的核心是什么？",trap:"容易混淆夏粮与秋粮的数据；粮食安全≠粮食自给率100%。",mem:"谷物基本自给·口粮绝对安全"},
+      {point:"乡村振兴与粮食生产",test:"申论/面试：如何理解'把饭碗牢牢端在自己手里'？",trap:"不能只讲增产不讲增收，需要兼顾农民收益。",mem:"藏粮于地·藏粮于技·农民增收"},
+    ],
+    shenlun:"适用于'粮食安全''乡村振兴'话题。引用：'14689万吨的夏粮产量，再次印证了'中国饭碗'的底气。乡村振兴的首要任务是确保国家粮食安全。'",
+    words:[{w:"粮食安全",d:"确保所有人都能获得充足安全的食物"},{w:"藏粮于地",d:"通过保护耕地确保粮食生产能力"}]},
+  {id:6,title:"三部门联合发布《关于加强公务员录用考试培训机构规范管理的若干规定》",cat:"法治建设",time:"2026-06-15",source:"教育部",star:!1,
+    summary:"教育部、市场监管总局、民政部联合发布规定，要求公考培训机构须取得办学许可证，专职教师不低于从业人员四分之一，严禁使用'包过''保录''内部命题'等宣传用语，预收费全部进入银行存管专户。过渡期至2026年12月31日。",
+    sourceLink:"来源：教育部 2026-06-15",
+    exam:[
+      {point:"公考培训行业规范政策",test:"常识判断/申论：对公考培训行业出台规范政策的背景和意义。",trap:"容易片面理解为'打压培训机构'，实际上是规范行业健康发展。",mem:"办学许可证·禁止虚假宣传·资金监管"},
+      {point:"民生领域的政府监管",test:"面试综合分析题：如何看待政府加强对培训机构的监管？",trap:"答题时不能只讲监管不讲发展，要体现'包容审慎监管'理念。",mem:"规范与发展并重·保护消费者权益"},
+    ],
+    shenlun:"适用于'政府监管''民生治理'话题。引用：'三部门联合规范公考培训市场，体现了政府维护市场秩序、保护消费者权益的决心，也为教育培训行业健康发展指明了方向。'",
+    words:[{w:"规范管理",d:"通过制度规则对行为进行引导和约束"},{w:"包容审慎监管",d:"在鼓励创新和防范风险之间寻求平衡的监管方式"}]},
+  {id:7,title:"我国成功发射高分辨率对地观测系统卫星",cat:"科技创新",time:"2026-06-14",source:"中国航天报",star:!1,
+    summary:"6月14日12时30分，我国在太原卫星发射中心使用长征六号改运载火箭，成功将高分辨率对地观测系统卫星发射升空。该卫星将服务于国土资源调查、城市规划、防灾减灾等领域。",
+    sourceLink:"来源：中国航天报 2026-06-14",
+    exam:[
+      {point:"航天科技成果的应用",test:"常识判断：高分辨率对地观测卫星的主要应用领域？",trap:"容易局限于'军事侦察'，实际已广泛应用于民用领域。",mem:"国土资源·城市规划·防灾减灾·农业监测"},
+    ],
+    shenlun:"适用于'科技创新'话题。引用：'从长征火箭到高分卫星，中国航天不断刷新高度，彰显了科技自立自强的中国力量。'",
+    words:[{w:"科技自立自强",d:"依靠自身力量实现科技突破和发展"},{w:"高分专项",d:"高分辨率对地观测系统重大专项"}]},
+  {id:8,title:"全国生态环境保护大会召开 部署美丽中国建设重点任务",cat:"生态环保",time:"2026-06-13",source:"生态环境部",star:!1,
+    summary:"全国生态环境保护大会在京召开。会议强调要深入贯彻习近平生态文明思想，全面推进美丽中国建设，持续深入打好蓝天、碧水、净土保卫战，加快推动发展方式绿色低碳转型。",
+    sourceLink:"来源：生态环境部 2026-06-13",
+    exam:[
+      {point:"生态文明建设的核心要义",test:"常识判断：习近平生态文明思想的核心要义？",trap:"注意区分'绿水青山就是金山银山'（理念）与'双碳目标'（具体指标）。",mem:"两山理论·绿色发展·人与自然和谐共生"},
+      {point:"美丽中国建设的内涵",test:"申论：围绕'美丽中国建设'写一篇议论文。",trap:"不能只写环保不写发展，要体现'生态优先、绿色发展'的辩证关系。",mem:"蓝天碧水净土·绿色低碳·制度建设"},
+    ],
+    shenlun:"适用于'生态文明''绿色发展'话题。引用：'全国生态环境保护大会的召开，标志着美丽中国建设进入了新阶段，要以更高标准打好污染防治攻坚战。'",
+    words:[{w:"美丽中国",d:"建设生态环境优美的社会主义现代化强国"},{w:"绿色发展",d:"以效率、和谐、可持续为目标的经济增长方式"}]},
+  {id:9,title:"人力资源社会保障部：2026届高校毕业生就业促进周启动",cat:"民生保障",time:"2026-06-12",source:"人社部",star:!1,
+    summary:"人力资源社会保障部6月12日启动2026届高校毕业生就业促进周活动。活动期间将举办线上线下招聘会2.3万场，提供岗位超300万个。2026届全国高校毕业生预计达1198万人。",
+    sourceLink:"来源：人社部 2026-06-12",
+    exam:[
+      {point:"就业优先政策的实施",test:"常识判断：我国就业政策的核心导向是什么？",trap:"不能孤立看就业数据，需结合经济形势理解就业压力。",mem:"就业优先·高校毕业生·多渠道就业"},
+    ],
+    shenlun:"适用于'民生保障''青年发展'话题。引用：'面对1198万高校毕业生的就业需求，就业促进周的启动体现了政府全力以赴稳就业、保民生的责任担当。'",
+    words:[{w:"就业优先",d:"将促进就业放在经济社会发展的优先位置"},{w:"多渠道就业",d:"通过多种途径和方式实现就业"}]},
+  {id:10,title:"中央军委政治工作会议在延安召开",cat:"党建理论",time:"2026-06-11",source:"解放军报",star:!1,
+    summary:"中央军委政治工作会议6月11日在陕西延安召开。习近平总书记出席会议并发表重要讲话，强调要传承弘扬延安精神，加强军队党的建设，确保枪杆子永远掌握在忠于党和人民的人手中。",
+    sourceLink:"来源：解放军报 2026-06-11",
+    exam:[
+      {point:"党对军队的绝对领导",test:"常识判断：党对军队绝对领导的根本原则是什么？",trap:"注意区分'党指挥枪'（根本原则）与'军委主席负责制'（具体制度）。",mem:"党指挥枪·军委主席负责制"},
+    ],
+    shenlun:"适用于'党的建设''军队建设'话题。引用：'延安精神跨越时空、历久弥新，是加强新时代军队党的建设的宝贵精神财富。'",
+    words:[{w:"延安精神",d:"坚定正确的政治方向，解放思想实事求是"},{w:"党指挥枪",d:"党对军队实行绝对领导的根本原则"}]},
+  {id:11,title:"《未成年人网络保护条例实施细则》正式施行",cat:"法治建设",time:"2026-06-10",source:"中央网信办",star:!1,
+    summary:"《未成年人网络保护条例实施细则》6月10日起正式施行。细则对网络游戏时长限制、直播打赏限额、个人信息保护等方面作出具体规定，明确网络平台的主体责任。",
+    sourceLink:"来源：中央网信办 2026-06-10",
+    exam:[
+      {point:"未成年人网络保护的法律体系",test:"常识判断：我国未成年人网络保护的主要法规有哪些？",trap:"容易混淆各部法律的保护侧重点。",mem:"网络保护·平台责任·防沉迷"},
+    ],
+    shenlun:"适用于'未成年人保护''网络治理'话题。引用：'从条例到实施细则，未成年人网络保护正在从立法走向精细化执行，织密了未成年人健康成长的法治保护网。'",
+    words:[{w:"未成年人保护",d:"保障未成年人合法权益和健康成长"},{w:"平台责任",d:"网络平台依法承担的审查与管理义务"}]},
+  {id:12,title:"江苏出台《数字经济发展三年行动计划》打造全国数字经济创新发展高地",cat:"经济发展",time:"2026-06-09",source:"江苏省政府",star:!1,
+    summary:"江苏省政府印发《数字经济发展三年行动计划（2026-2028年）》，提出到2028年数字经济核心产业增加值占GDP比重达15%以上，打造具有国际竞争力的数字产业集群。",
+    sourceLink:"来源：江苏省政府 2026-06-09",
+    exam:[
+      {point:"数字经济发展战略",test:"常识判断：我国数字经济发展的战略定位是什么？",trap:"注意区分'数字经济'与'数字政府'的不同内涵。",mem:"数字产业集群·核心产业增加值·15%目标"},
+    ],
+    shenlun:"适用于'数字经济''区域发展'话题。引用：'江苏省率先出台数字经济三年行动计划，展现了经济大省在数字化转型中的引领担当。'",
+    words:[{w:"数字经济",d:"以数据资源为关键要素的经济形态"},{w:"产业集群",d:"相关企业在特定区域高度集中形成的有机整体"}]},
+  {id:13,title:"中欧班列累计开行突破10万列 成为亚欧大陆重要物流通道",cat:"外交国际",time:"2026-06-08",source:"中国铁路",star:!1,
+    summary:"中国国家铁路集团有限公司6月8日宣布，中欧班列累计开行突破10万列。中欧班列已连通欧洲25个国家217个城市，成为亚欧大陆重要的国际物流通道和经贸合作桥梁。",
+    sourceLink:"来源：中国铁路 2026-06-08",
+    exam:[
+      {point:"一带一路建设成果",test:"常识判断：中欧班列体现了什么发展战略的成果？",trap:"注意中欧班列是'设施联通'而非'贸易畅通'的直接体现。",mem:"一带一路·设施联通·10万列"},
+    ],
+    shenlun:"适用于'对外开放''一带一路'话题。引用：'10万列的里程碑，见证了共建'一带一路'从宏伟蓝图到落地生根的伟大实践。'",
+    words:[{w:"一带一路",d:"丝绸之路经济带和21世纪海上丝绸之路"},{w:"中欧班列",d:"连接中国与欧洲的国际铁路联运列车"}]},
+  {id:14,title:"全国科技大会表彰2025年度国家科学技术奖获奖项目",cat:"科技创新",time:"2026-06-07",source:"科技部",star:!1,
+    summary:"全国科技大会6月7日在京召开，表彰2025年度国家科学技术奖获奖项目共265项。其中，国家自然科学奖45项、技术发明奖62项、科技进步奖158项。",
+    sourceLink:"来源：科技部 2026-06-07",
+    exam:[
+      {point:"国家科技奖励体系",test:"常识判断：国家科学技术奖包含哪几个奖项类别？",trap:"注意区分'自然科学奖'（基础研究）和'技术发明奖'（应用创新）的不同侧重。",mem:"自然科学奖·技术发明奖·科技进步奖"},
+    ],
+    shenlun:"适用于'科技创新'话题。引用：'265项获奖项目的背后，是中国科技工作者潜心研究、勇攀高峰的奋斗缩影。'",
+    words:[{w:"科技奖励",d:"对科技成果的表彰和激励制度"},{w:"基础研究",d:"为获取新知识而进行的实验性或理论性研究"}]},
+];
+
+// ====== STATE ======
+var curTime='7day',curCat='all',isGrid=!1,curDetail=null;
+
+// ====== FILTER ======
+function getFiltered(){
+  var pool=newsData.slice();
+  var now=new Date('2026-06-20');
+  if(curTime==='today')pool=pool.filter(function(x){return x.time==='2026-06-20'});
+  else if(curTime==='3day')pool=pool.filter(function(x){return new Date(x.time)>=new Date('2026-06-18')});
+  else if(curTime==='7day')pool=pool.filter(function(x){return new Date(x.time)>=new Date('2026-06-14')});
+  // 30day: all
+  if(curCat!=='all')pool=pool.filter(function(x){return x.cat===curCat});
+  return pool;
+}
+
+function filterTime(t,el){
+  curTime=t;
+  document.querySelectorAll('#timeTabs button').forEach(function(b){b.classList.remove('tab-active');b.classList.add('bg-white','border-gray-200','text-gray-500')});
+  el.classList.add('tab-active');el.classList.remove('bg-white','border-gray-200','text-gray-500');
+  renderList();
+}
+
+function filterCat(c,el){
+  curCat=c;
+  document.querySelectorAll('#catTabs1 button,#catTabs2 button').forEach(function(b){b.classList.remove('tab-active');b.classList.add('bg-white','border-gray-200','text-gray-500')});
+  el.classList.add('tab-active');el.classList.remove('bg-white','border-gray-200','text-gray-500');
+  renderList();
+}
+
+// ====== RENDER LIST ======
+function renderList(){
+  var pool=getFiltered();
+  document.getElementById('listCount').textContent='共 '+pool.length+' 条时政';
+  var html='';
+  pool.forEach(function(item){
+    html+='<div class="card-hover flex items-center justify-between px-5 py-4 border-b border-gray-50 last:border-0 cursor-pointer transition" onclick="openDetail('+item.id+')"><div class="flex items-center gap-3 flex-1 min-w-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1677ff" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="text-sm font-medium truncate">'+item.title+'</span></div><span class="text-xs bg-gray-100 text-gray-500 px-2.5 py-1 rounded-full whitespace-nowrap ml-3">'+item.cat+'</span></div>';
+  });
+  document.getElementById('newsList').innerHTML=html||'<div class="text-center py-16 text-gray-400">暂无匹配时政</div>';
+}
+
+// ====== VIEW TOGGLE ======
+document.getElementById('viewList').addEventListener('click',function(){isGrid=!1;this.classList.add('bg-primary','text-white');this.classList.remove('bg-white','border','text-gray-400');document.getElementById('viewGrid').classList.remove('bg-primary','text-white');document.getElementById('viewGrid').classList.add('bg-white','border','text-gray-400');renderList()});
+document.getElementById('viewGrid').addEventListener('click',function(){isGrid=!0;this.classList.add('bg-primary','text-white');this.classList.remove('bg-white','border','text-gray-400');document.getElementById('viewList').classList.remove('bg-primary','text-white');document.getElementById('viewList').classList.add('bg-white','border','text-gray-400');renderList()});
+
+// ====== DETAIL ======
+function openDetail(id){
+  curDetail=newsData.find(function(x){return x.id===id});if(!curDetail)return;
+  document.getElementById('listPage').classList.add('hidden');
+  document.getElementById('detailPage').classList.remove('hidden');
+  document.getElementById('detailTitle').textContent=curDetail.title;
+  document.getElementById('detailSource').textContent=curDetail.source+' · '+curDetail.time;
+  document.getElementById('detailStar').textContent=curDetail.star?'★':'☆';
+  document.getElementById('detailCat').textContent=curDetail.cat;
+  document.getElementById('detailSummary').textContent=curDetail.summary;
+  document.getElementById('detailSourceLink').textContent=curDetail.sourceLink;
+  // Exam table
+  var rows='';
+  curDetail.exam.forEach(function(e){rows+='<tr class="border-b border-gray-50"><td class="px-4 py-3 font-semibold text-gray-800">'+e.point+'</td><td class="px-4 py-3 text-gray-600">'+e.test+'</td><td class="px-4 py-3 text-orange-600 text-xs">'+e.trap+'</td><td class="px-4 py-3 text-primary font-semibold text-xs">'+e.mem+'</td></tr>'});
+  document.getElementById('tabExamBody').innerHTML=rows;
+  // Shenlun
+  document.getElementById('tabShenlunContent').textContent=curDetail.shenlun;
+  // Words
+  var chips='';
+  curDetail.words.forEach(function(w){chips+='<span class="px-3 py-1.5 bg-pLight text-primary rounded-full text-sm font-medium">'+w.w+'：'+w.d+'</span>'});
+  document.getElementById('tabWordsContent').innerHTML=chips;
+  // Reset tabs
+  switchDetailTab('exam',document.querySelector('#detailTabs button[data-dtab="exam"]'));
+  window.scrollTo(0,0);
+}
+
+function backToList(){
+  document.getElementById('listPage').classList.remove('hidden');
+  document.getElementById('detailPage').classList.add('hidden');
+  window.scrollTo(0,0);
+}
+
+function toggleStar(){
+  if(curDetail){curDetail.star=!curDetail.star;document.getElementById('detailStar').textContent=curDetail.star?'★':'☆'}
+}
+
+function switchDetailTab(tab,el){
+  document.querySelectorAll('#detailTabs button').forEach(function(b){b.classList.remove('tab-active');b.classList.add('bg-white','border','text-gray-500')});
+  el.classList.add('tab-active');el.classList.remove('bg-white','border','text-gray-500');
+  document.getElementById('tabExam').classList.add('hidden');document.getElementById('tabShenlun').classList.add('hidden');document.getElementById('tabWords').classList.add('hidden');
+  if(tab==='exam')document.getElementById('tabExam').classList.remove('hidden');
+  else if(tab==='shenlun')document.getElementById('tabShenlun').classList.remove('hidden');
+  else document.getElementById('tabWords').classList.remove('hidden');
+}
+
+// ====== INIT ======
+renderList();
+</script></body></html>
