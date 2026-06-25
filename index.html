@@ -2,97 +2,102 @@
 <style>
 body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f5f7}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:2px}
+#detailPage::-webkit-scrollbar{display:none}#newsList::-webkit-scrollbar{display:none}
 .tab-active{background:#1677ff!important;color:#fff!important;border-color:#1677ff!important}
-.card-hover:hover{background:#fafafa}
+.tab-active-card{background:linear-gradient(135deg,#1677ff,#4f8fff)!important;color:#fff!important;border-color:#1677ff!important;box-shadow:0 4px 16px rgba(22,119,255,.25)!important}
+.card-hover{transition:all .2s ease}
+.card-hover:hover{background:#f8faff;transform:translateX(2px);box-shadow:inset 3px 0 0 #1677ff}
 .fade-in{animation:fadeIn .3s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 </style></head><body class="min-h-screen">
 
 <!-- ====== 列表页 ====== -->
-<div id="listPage">
-  <div class="max-w-5xl mx-auto px-6 py-6">
+<div id="listPage" >
+  <div class="max-w-5xl mx-auto px-6 py-6 h-full">
     <!-- Header -->
     <div class="flex items-center justify-between mb-5">
-      <div><h1 class="text-xl font-extrabold tracking-tight">📰 每日时政</h1><p class="text-xs text-gray-400 mt-1">公考时政热点 · 考点式解读</p></div>
-      <div class="flex items-center gap-2">
-        <button id="viewList" class="p-2 rounded-lg bg-primary text-white"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></button>
-        <button id="viewGrid" class="p-2 rounded-lg bg-white border border-gray-200 text-gray-400"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></button>
-      </div>
-    </div>
+      <div><h1 class="text-xl font-extrabold tracking-tight flex items-center gap-2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1677ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="6" y1="7" x2="18" y2="7"/><line x1="6" y1="11" x2="18" y2="11"/><line x1="6" y1="15" x2="10" y2="15"/></svg>每日时政</h1><p class="text-xs text-gray-400 mt-1">公考时政热点 · 考点式解读</p></div>
+          </div>
 
     <!-- Time tabs -->
-    <div class="flex gap-2 mb-4 flex-wrap" id="timeTabs">
-      <button class="px-4 py-1.5 rounded-full text-sm font-semibold border transition" data-time="today" onclick="filterTime('today',this)">今天</button>
-      <button class="px-4 py-1.5 rounded-full text-sm font-semibold border transition" data-time="3day" onclick="filterTime('3day',this)">近三天</button>
-      <button class="px-4 py-1.5 rounded-full text-sm font-semibold border transition tab-active" data-time="7day" onclick="filterTime('7day',this)">近七天</button>
-      <button class="px-4 py-1.5 rounded-full text-sm font-semibold border transition" data-time="30day" onclick="filterTime('30day',this)">近一个月</button>
+    <div class="flex gap-2 mb-5" id="timeTabs">
+      <div class="px-5 py-2.5 rounded-xl cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md bg-white border border-gray-200 text-gray-500 text-sm font-bold flex items-center gap-2" data-time="today" onclick="filterTime('today',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>今天</div>
+      <div class="px-5 py-2.5 rounded-xl cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md bg-white border border-gray-200 text-gray-500 text-sm font-bold flex items-center gap-2" data-time="3day" onclick="filterTime('3day',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8" y2="14"/><line x1="12" y1="14" x2="12" y2="14"/><line x1="16" y1="14" x2="16" y2="14"/></svg>近三天</div>
+      <div class="px-5 py-2.5 rounded-xl cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md tab-active-card text-sm font-bold flex items-center gap-2" data-time="7day" onclick="filterTime('7day',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="8 14 12 17 16 14"/></svg>近七天</div>
+      <div class="px-5 py-2.5 rounded-xl cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md bg-white border border-gray-200 text-gray-500 text-sm font-bold flex items-center gap-2" data-time="30day" onclick="filterTime('30day',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="12" cy="16" r="2"/></svg>近一个月</div>
     </div>
 
     <!-- Category tabs -->
-    <div class="flex gap-2 mb-2 flex-wrap" id="catTabs1">
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition tab-active" data-cat="all" onclick="filterCat('all',this)">全部</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="重要会议文件" onclick="filterCat('重要会议文件',this)">重要会议文件</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="科技创新" onclick="filterCat('科技创新',this)">科技创新</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="经济发展" onclick="filterCat('经济发展',this)">经济发展</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="社会治理" onclick="filterCat('社会治理',this)">社会治理</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="乡村振兴" onclick="filterCat('乡村振兴',this)">乡村振兴</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="民生保障" onclick="filterCat('民生保障',this)">民生保障</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="生态环保" onclick="filterCat('生态环保',this)">生态环保</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="法治建设" onclick="filterCat('法治建设',this)">法治建设</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="文化建设" onclick="filterCat('文化建设',this)">文化建设</button>
-    </div>
-    <div class="flex gap-2 mb-5 flex-wrap" id="catTabs2">
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="国家安全" onclick="filterCat('国家安全',this)">国家安全</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="外交国际" onclick="filterCat('外交国际',this)">外交国际</button>
-      <button class="px-3 py-1 rounded-full text-xs font-semibold border transition bg-white border-gray-200 text-gray-500" data-cat="党建理论" onclick="filterCat('党建理论',this)">党建理论</button>
+    <div class="grid grid-cols-4 gap-3 mb-5" id="catTabs">
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg tab-active-card flex items-center gap-3" data-cat="all" onclick="filterCat('all',this)"><div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><div class="text-sm font-bold">全部</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="重要会议文件" onclick="filterCat('重要会议文件',this)"><div class="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div><div class="text-sm font-bold">重要会议文件</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="科技创新" onclick="filterCat('科技创新',this)"><div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="text-sm font-bold">科技创新</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="经济发展" onclick="filterCat('经济发展',this)"><div class="w-10 h-10 rounded-xl bg-green-50 text-green-600 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div><div class="text-sm font-bold">经济发展</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="社会治理" onclick="filterCat('社会治理',this)"><div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><div class="text-sm font-bold">社会治理</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="乡村振兴" onclick="filterCat('乡村振兴',this)"><div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="text-sm font-bold">乡村振兴</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="民生保障" onclick="filterCat('民生保障',this)"><div class="w-10 h-10 rounded-xl bg-pink-50 text-pink-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div><div class="text-sm font-bold">民生保障</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="生态环保" onclick="filterCat('生态环保',this)"><div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="text-sm font-bold">生态环保</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="法治建设" onclick="filterCat('法治建设',this)"><div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div><div class="text-sm font-bold">法治建设</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="文化建设" onclick="filterCat('文化建设',this)"><div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text-sm font-bold">文化建设</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="国家安全" onclick="filterCat('国家安全',this)"><div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="text-sm font-bold">国家安全</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="外交国际" onclick="filterCat('外交国际',this)"><div class="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><div class="text-sm font-bold">外交国际</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-gray-200 text-gray-500 flex items-center gap-3" data-cat="党建理论" onclick="filterCat('党建理论',this)"><div class="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div><div class="text-sm font-bold">党建理论</div></div>
+      <div class="rounded-2xl p-4 border-2 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg bg-white border-yellow-200 text-yellow-600 flex items-center gap-3" data-cat="fav" onclick="filterCat('fav',this)"><div class="w-10 h-10 rounded-xl bg-yellow-100 text-yellow-500 flex items-center justify-center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="text-sm font-bold">收藏</div></div>
     </div>
 
     <!-- Count -->
     <p class="text-xs text-gray-400 mb-3" id="listCount">共 14 条时政</p>
 
     <!-- List -->
-    <div id="newsList" class="space-y-0 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"></div>
+    <div id="newsList" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden" style="height:52vh;overflow-y:auto;-ms-overflow-style:none;scrollbar-width:none"></div>
+
+    <!-- Pagination -->
+    <div class="flex items-center justify-center gap-4 mt-4" id="pagination">
+      <button class="px-5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-bold text-gray-500 transition-all duration-200 hover:border-primary hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed" onclick="goPage(-1)" id="btnPrev">&lt; 上一页</button>
+      <span class="text-sm font-bold text-gray-700" id="pageInfo">1 / 1</span>
+      <button class="px-5 py-2.5 rounded-xl border border-gray-200 bg-white text-sm font-bold text-gray-500 transition-all duration-200 hover:border-primary hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed" onclick="goPage(1)" id="btnNext">下一页 &gt;</button>
+    </div>
   </div>
 </div>
 
 <!-- ====== 详情页 ====== -->
-<div id="detailPage" class="hidden">
-  <div class="max-w-5xl mx-auto px-6 py-6">
+<div id="detailPage" class="hidden" style="height:80vh;overflow:hidden">
+  <div class="max-w-5xl mx-auto px-6 py-6 h-full overflow-y-auto" style="-ms-overflow-style:none;scrollbar-width:none">
     <!-- Nav -->
     <div class="flex items-center gap-4 mb-6">
       <button onclick="backToList()" class="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-primary transition"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>返回</button>
       <div class="flex-1"><h1 class="text-lg font-extrabold" id="detailTitle"></h1></div>
-      <div class="flex items-center gap-3 text-xs text-gray-400"><span id="detailSource"></span><span class="text-yellow-500 cursor-pointer text-lg" id="detailStar" onclick="toggleStar()">☆</span><span class="bg-gray-100 px-2 py-1 rounded text-xs" id="detailCat"></span></div>
+      <div class="flex items-center gap-3 text-xs text-gray-400"><span id="detailSource"></span><span class="bg-gray-100 px-2 py-1 rounded text-xs" id="detailCat"></span></div>
     </div>
 
     <!-- 考点式摘要 -->
-    <div class="bg-pLight rounded-xl p-5 mb-5 fade-in">
-      <h3 class="text-sm font-bold text-primary mb-3">📋 考点式摘要</h3>
-      <p class="text-sm leading-relaxed text-gray-700" id="detailSummary"></p>
-      <p class="text-xs text-gray-400 mt-3" id="detailSourceLink"></p>
+    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-7 mb-6 fade-in border border-blue-100">
+      <div class="flex items-center justify-between mb-4"><div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-xl bg-blue-500 flex items-center justify-center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3 class="text-base font-bold text-blue-700">考点式摘要</h3></div><span class="text-2xl cursor-pointer transition hover:scale-125 text-yellow-500" id="detailStar" onclick="toggleStar()">☆</span></div>
+      <p class="text-lg leading-relaxed text-gray-700" id="detailSummary"></p>
+      <p class="text-sm text-blue-500 mt-4 font-medium" id="detailSourceLink"></p>
     </div>
 
     <!-- Tabs -->
-    <div class="flex gap-2 mb-4" id="detailTabs">
-      <button class="px-4 py-2 rounded-lg text-sm font-bold transition tab-active" data-dtab="exam" onclick="switchDetailTab('exam',this)">必备考点表</button>
-      <button class="px-4 py-2 rounded-lg text-sm font-bold transition bg-white border border-gray-200 text-gray-500" data-dtab="shenlun" onclick="switchDetailTab('shenlun',this)">申论素材卡</button>
-      <button class="px-4 py-2 rounded-lg text-sm font-bold transition bg-white border border-gray-200 text-gray-500" data-dtab="words" onclick="switchDetailTab('words',this)">高频实词</button>
+    <div class="flex gap-3 mb-5" id="detailTabs">
+      <button class="flex-1 py-3.5 rounded-2xl font-bold transition-all duration-200 tab-active shadow-md flex items-center justify-center gap-2" style="background:#1677ff;color:#fff" data-dtab="exam" onclick="switchDetailTab('exam',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>必备考点表</button>
+      <button class="flex-1 py-3.5 rounded-2xl font-bold transition-all duration-200 bg-white border-2 border-gray-200 text-gray-500 flex items-center justify-center gap-2 hover:border-green-500 hover:text-green-500" data-dtab="shenlun" onclick="switchDetailTab('shenlun',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>申论素材卡</button>
+      <button class="flex-1 py-3.5 rounded-2xl font-bold transition-all duration-200 bg-white border-2 border-gray-200 text-gray-500 flex items-center justify-center gap-2 hover:border-purple-500 hover:text-purple-500" data-dtab="words" onclick="switchDetailTab('words',this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>高频实词</button>
     </div>
 
     <!-- Tab Content -->
     <div id="tabExam" class="fade-in">
-      <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <table class="w-full text-sm">
-          <thead><tr class="bg-gray-50"><th class="px-4 py-3 text-left font-bold text-xs text-gray-500 w-1/5">必备考点</th><th class="px-4 py-3 text-left font-bold text-xs text-gray-500 w-1/4">会怎么考</th><th class="px-4 py-3 text-left font-bold text-xs text-gray-500 w-1/4">容易错在哪</th><th class="px-4 py-3 text-left font-bold text-xs text-gray-500">速记</th></tr></thead>
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <table class="w-full">
+          <thead><tr class="bg-slate-500"><th class="px-6 py-5 text-left font-bold text-base text-white">必备考点</th><th class="px-6 py-5 text-left font-bold text-base text-white">会怎么考</th><th class="px-6 py-5 text-left font-bold text-base text-white">容易错在哪</th><th class="px-6 py-5 text-left font-bold text-base text-white">速记</th></tr></thead>
           <tbody id="tabExamBody"></tbody>
         </table>
       </div>
     </div>
     <div id="tabShenlun" class="hidden fade-in">
-      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5"><p class="text-sm leading-relaxed text-gray-700" id="tabShenlunContent"></p></div>
+      <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-100 p-6"><div class="flex items-center gap-2 mb-3"><div class="w-7 h-7 rounded-lg bg-green-500 flex items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><h3 class="text-sm font-bold text-green-700">申论素材卡</h3></div><p class="text-base leading-relaxed text-gray-700" id="tabShenlunContent"></p></div>
     </div>
     <div id="tabWords" class="hidden fade-in">
-      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5"><div class="flex flex-wrap gap-2" id="tabWordsContent"></div></div>
+      <div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl border border-purple-100 p-6"><div class="flex items-center gap-2 mb-3"><div class="w-7 h-7 rounded-lg bg-purple-500 flex items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></div><h3 class="text-sm font-bold text-purple-700">高频实词</h3></div><div class="flex flex-wrap gap-2" id="tabWordsContent"></div></div>
     </div>
   </div>
 </div>
@@ -236,48 +241,55 @@ var newsData=[
 ];
 
 // ====== STATE ======
-var curTime='7day',curCat='all',isGrid=!1,curDetail=null;
+var curTime='7day',curCat='all',isGrid=!1,curDetail=null,curPage=0,perPage=12;
 
 // ====== FILTER ======
+var favorites=JSON.parse(localStorage.getItem('sz_favs')||'[]');
 function getFiltered(){
   var pool=newsData.slice();
+  if(curCat==='fav'){pool=pool.filter(function(x){return favorites.indexOf(x.id)!==-1});return pool}
   var now=new Date('2026-06-20');
   if(curTime==='today')pool=pool.filter(function(x){return x.time==='2026-06-20'});
   else if(curTime==='3day')pool=pool.filter(function(x){return new Date(x.time)>=new Date('2026-06-18')});
   else if(curTime==='7day')pool=pool.filter(function(x){return new Date(x.time)>=new Date('2026-06-14')});
-  // 30day: all
   if(curCat!=='all')pool=pool.filter(function(x){return x.cat===curCat});
   return pool;
 }
 
 function filterTime(t,el){
-  curTime=t;
-  document.querySelectorAll('#timeTabs button').forEach(function(b){b.classList.remove('tab-active');b.classList.add('bg-white','border-gray-200','text-gray-500')});
-  el.classList.add('tab-active');el.classList.remove('bg-white','border-gray-200','text-gray-500');
+  curTime=t;curPage=0;
+  document.querySelectorAll('#timeTabs > div').forEach(function(b){b.classList.remove('tab-active-card');b.classList.add('bg-white','border-gray-200','text-gray-500')});
+  el.classList.add('tab-active-card');el.classList.remove('bg-white','border-gray-200','text-gray-500');
   renderList();
 }
 
 function filterCat(c,el){
-  curCat=c;
-  document.querySelectorAll('#catTabs1 button,#catTabs2 button').forEach(function(b){b.classList.remove('tab-active');b.classList.add('bg-white','border-gray-200','text-gray-500')});
-  el.classList.add('tab-active');el.classList.remove('bg-white','border-gray-200','text-gray-500');
+  curCat=c;curPage=0;
+  document.querySelectorAll('#catTabs > div').forEach(function(b){b.classList.remove('tab-active-card');b.classList.add('bg-white','border-gray-200','text-gray-500')});
+  el.classList.add('tab-active-card');el.classList.remove('bg-white','border-gray-200','text-gray-500');
   renderList();
 }
+
+function goPage(dir){curPage+=dir;renderList()}
 
 // ====== RENDER LIST ======
 function renderList(){
   var pool=getFiltered();
   document.getElementById('listCount').textContent='共 '+pool.length+' 条时政';
+  var pages=Math.ceil(pool.length/perPage)||1;
+  if(curPage>=pages)curPage=pages-1;
+  if(curPage<0)curPage=0;
+  var start=curPage*perPage;
+  var pageItems=pool.slice(start,start+perPage);
+  document.getElementById('pageInfo').textContent=(curPage+1)+' / '+pages;
+  document.getElementById('btnPrev').disabled=curPage<=0;
+  document.getElementById('btnNext').disabled=curPage>=pages-1;
   var html='';
-  pool.forEach(function(item){
-    html+='<div class="card-hover flex items-center justify-between px-5 py-4 border-b border-gray-50 last:border-0 cursor-pointer transition" onclick="openDetail('+item.id+')"><div class="flex items-center gap-3 flex-1 min-w-0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1677ff" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="text-sm font-medium truncate">'+item.title+'</span></div><span class="text-xs bg-gray-100 text-gray-500 px-2.5 py-1 rounded-full whitespace-nowrap ml-3">'+item.cat+'</span></div>';
+  pageItems.forEach(function(item){
+    html+='<div class="card-hover flex items-center justify-between px-5 py-4 border-b border-gray-50 last:border-0 cursor-pointer" onclick="openDetail('+item.id+')"><div class="flex items-center gap-3 flex-1 min-w-0"><div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1677ff" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><span class="text-sm font-semibold truncate">'+item.title+'</span></div><span class="text-xs bg-gray-100 text-gray-500 px-2.5 py-1 rounded-full whitespace-nowrap ml-3 font-medium">'+item.cat+'</span></div>';
   });
-  document.getElementById('newsList').innerHTML=html||'<div class="text-center py-16 text-gray-400">暂无匹配时政</div>';
+  document.getElementById('newsList').innerHTML=html||'<div class="text-center py-20 text-gray-400"><div class="text-4xl mb-4">📭</div><p class="text-sm">暂无匹配时政</p></div>';
 }
-
-// ====== VIEW TOGGLE ======
-document.getElementById('viewList').addEventListener('click',function(){isGrid=!1;this.classList.add('bg-primary','text-white');this.classList.remove('bg-white','border','text-gray-400');document.getElementById('viewGrid').classList.remove('bg-primary','text-white');document.getElementById('viewGrid').classList.add('bg-white','border','text-gray-400');renderList()});
-document.getElementById('viewGrid').addEventListener('click',function(){isGrid=!0;this.classList.add('bg-primary','text-white');this.classList.remove('bg-white','border','text-gray-400');document.getElementById('viewList').classList.remove('bg-primary','text-white');document.getElementById('viewList').classList.add('bg-white','border','text-gray-400');renderList()});
 
 // ====== DETAIL ======
 function openDetail(id){
@@ -292,13 +304,13 @@ function openDetail(id){
   document.getElementById('detailSourceLink').textContent=curDetail.sourceLink;
   // Exam table
   var rows='';
-  curDetail.exam.forEach(function(e){rows+='<tr class="border-b border-gray-50"><td class="px-4 py-3 font-semibold text-gray-800">'+e.point+'</td><td class="px-4 py-3 text-gray-600">'+e.test+'</td><td class="px-4 py-3 text-orange-600 text-xs">'+e.trap+'</td><td class="px-4 py-3 text-primary font-semibold text-xs">'+e.mem+'</td></tr>'});
+  curDetail.exam.forEach(function(e){rows+='<tr class="border-b border-gray-50 hover:bg-blue-50/30 transition"><td class="px-6 py-5 font-semibold text-gray-800 text-base">'+e.point+'</td><td class="px-6 py-5 text-gray-600 text-base">'+e.test+'</td><td class="px-6 py-5 text-orange-600 text-base leading-relaxed">'+e.trap+'</td><td class="px-6 py-5 text-primary font-bold text-base">'+e.mem+'</td></tr>'});
   document.getElementById('tabExamBody').innerHTML=rows;
   // Shenlun
   document.getElementById('tabShenlunContent').textContent=curDetail.shenlun;
   // Words
   var chips='';
-  curDetail.words.forEach(function(w){chips+='<span class="px-3 py-1.5 bg-pLight text-primary rounded-full text-sm font-medium">'+w.w+'：'+w.d+'</span>'});
+  curDetail.words.forEach(function(w){chips+='<span class="px-4 py-2.5 bg-white rounded-xl text-sm font-semibold shadow-sm border border-purple-100"><span class="text-primary">'+w.w+'</span><span class="text-gray-400 mx-2">|</span><span class="text-gray-600">'+w.d+'</span></span>'});
   document.getElementById('tabWordsContent').innerHTML=chips;
   // Reset tabs
   switchDetailTab('exam',document.querySelector('#detailTabs button[data-dtab="exam"]'));
@@ -312,12 +324,20 @@ function backToList(){
 }
 
 function toggleStar(){
-  if(curDetail){curDetail.star=!curDetail.star;document.getElementById('detailStar').textContent=curDetail.star?'★':'☆'}
+  if(!curDetail)return;
+  curDetail.star=!curDetail.star;
+  var idx=favorites.indexOf(curDetail.id);
+  if(curDetail.star){if(idx===-1)favorites.push(curDetail.id)}else{if(idx!==-1)favorites.splice(idx,1)}
+  localStorage.setItem('sz_favs',JSON.stringify(favorites));
+  document.getElementById('detailStar').textContent=curDetail.star?'★':'☆';
+  if(curCat==='fav')renderList();
 }
 
+var tabColors={exam:'#1677ff',shenlun:'#16a34a',words:'#8b5cf6'};
 function switchDetailTab(tab,el){
-  document.querySelectorAll('#detailTabs button').forEach(function(b){b.classList.remove('tab-active');b.classList.add('bg-white','border','text-gray-500')});
-  el.classList.add('tab-active');el.classList.remove('bg-white','border','text-gray-500');
+  document.querySelectorAll('#detailTabs button').forEach(function(b){b.classList.remove('tab-active','shadow-md');b.classList.add('bg-white','border-2','border-gray-200','text-gray-500');b.style.background='';b.style.color=''});
+  el.classList.add('tab-active','shadow-md');el.classList.remove('bg-white','border-2','border-gray-200','text-gray-500');
+  el.style.background=tabColors[tab];el.style.color='#fff';
   document.getElementById('tabExam').classList.add('hidden');document.getElementById('tabShenlun').classList.add('hidden');document.getElementById('tabWords').classList.add('hidden');
   if(tab==='exam')document.getElementById('tabExam').classList.remove('hidden');
   else if(tab==='shenlun')document.getElementById('tabShenlun').classList.remove('hidden');
