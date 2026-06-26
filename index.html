@@ -62,15 +62,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
 /* Word chips */
 .word-chip{padding:10px 16px;background:#fff;border-radius:12px;font-size:.82em;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid var(--border)}
 
-/* Drawer */
-.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.1);z-index:250;display:none}
-.drawer-panel{position:fixed;left:-200px;top:0;bottom:0;width:180px;z-index:260;background:var(--bg);border-right:1px solid var(--border);display:flex;flex-direction:column;gap:10px;padding:80px 16px 20px;transition:left .3s cubic-bezier(.25,.1,.25,1);box-shadow:0 4px 18px rgba(0,0,0,.18)}
-.drawer-panel.open{left:0}
-.drawer-toggle{position:absolute;right:-44px;top:50%;transform:translateY(-50%);width:44px;height:44px;background:var(--card);border-radius:0 14px 14px 0;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid var(--border);border-left:0;box-shadow:2px 0 12px rgba(0,0,0,.06);color:var(--sub);transition:all .3s}
-.drawer-toggle:hover{color:var(--accent)}
-.drawer-link{display:block;padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.06);font-size:.82em;font-weight:700;text-align:center;text-decoration:none;color:var(--text);transition:all .25s}
-.drawer-link:hover{transform:translateY(-1px);border-color:var(--accent);box-shadow:0 4px 14px rgba(88,101,242,.12)}
-
 /* Fade */
 .fade-in{animation:fadeIn .3s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
@@ -209,27 +200,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei
   </div>
 </div>
 
-<!-- Drawer -->
-<div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
-<div class="drawer-panel" id="drawerPanel">
-  <div class="drawer-toggle" onclick="toggleDrawer()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></div>
-  <a href="https://thanhtientt51-commits.github.io/jiangsu-jobs-2026/" class="drawer-link">筛岗</a>
-  <a href="https://thanhtientt51-commits.github.io/mock-interview/" class="drawer-link">面试</a>
-  <a href="https://thanhtientt51-commits.github.io/xct/" class="drawer-link">行测</a>
-  <a href="https://thanhtientt51-commits.github.io/sl-practice/" class="drawer-link">申论</a>
-  <a href="https://thanhtientt51-commits.github.io/shenlunguifanciyu/" class="drawer-link">规范词</a>
-  <a href="https://thanhtientt51-commits.github.io/idiom-practice/" class="drawer-link">成语</a>
-</div>
-
 <footer class="footer">AI智能引擎驱动 · 仅供练习参考</footer>
 
 <script>
-var drawerOpen=false;
-function toggleDrawer(){
-  drawerOpen=!drawerOpen;
-  document.getElementById('drawerPanel').classList.toggle('open',drawerOpen);
-  document.getElementById('drawerOverlay').style.display=drawerOpen?'block':'none';
-}
 
 // ====== DATA ======
 var newsData=[
